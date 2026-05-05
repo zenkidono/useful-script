@@ -159,6 +159,7 @@ const tabs = [
       s.fb_toggleLight,
       s.fb_toggleNewFeed,
       s.fb_stopNewFeed,
+      s.fb_preventFeedRefresh,
       s.fb_blockSeenStory,
       s.fb_getPostReactionCount,
       s.fb_whoIsTyping,
