@@ -238,7 +238,7 @@ export const Recommend = {
     popupScript: {
       onClick: () =>
         window.open(
-          "https://chromewebstore.google.com/detail/thanh-d%E1%BA%A5u-trang/jdbnofccmhefkmjbkkdkfiicjkgofkdh"
+          "https://chromewebstore.google.com/detail/thanh-d%E1%BA%A5u-trang/jdbnofccmhefkmjbkkdkfiicjkgofkdh",
         ),
     },
   },
@@ -257,7 +257,7 @@ export const Recommend = {
     popupScript: {
       onClick: () =>
         window.open(
-          "https://www.google.com/advanced_search?hl=" + getLang() + "&fg=1"
+          "https://www.google.com/advanced_search?hl=" + getLang() + "&fg=1",
         ),
     },
   },
@@ -337,7 +337,7 @@ export const Recommend = {
     popupScript: {
       onClick: () =>
         window.open(
-          "https://www.facebook.com/100004848287494/allactivity?activity_history=false&category_key=VIDEOWATCH&manage_mode=false&should_load_landing_page=false"
+          "https://www.facebook.com/100004848287494/allactivity?activity_history=false&category_key=VIDEOWATCH&manage_mode=false&should_load_landing_page=false",
         ),
     },
   },
@@ -418,7 +418,7 @@ export const Recommend = {
     popupScript: {
       onClick: () =>
         window.open(
-          "https://chromewebstore.google.com/detail/improve-youtube-%F0%9F%8E%A7-for-yo/bnomihfieiccainjcjblhegjgglakjdd"
+          "https://chromewebstore.google.com/detail/improve-youtube-%F0%9F%8E%A7-for-yo/bnomihfieiccainjcjblhegjgglakjdd",
         ),
     },
   },
@@ -522,7 +522,7 @@ export const Recommend = {
     popupScript: {
       onClick: () =>
         window.open(
-          "https://chromewebstore.google.com/detail/refined-github/hlepfoohegkhhmjieoechaddaejaokhf"
+          "https://chromewebstore.google.com/detail/refined-github/hlepfoohegkhhmjieoechaddaejaokhf",
         ),
     },
   },
@@ -626,7 +626,7 @@ export const Recommend = {
   có dạng: [Tên Wifi]:[Mật khẩu]
 
   Mở Powershell và chạy lệnh sau:`,
-          `irm https://tinyurl.com/GetListWifiPasswords | iex`
+          `irm https://tinyurl.com/GetListWifiPasswords | iex`,
         );
       },
     },
@@ -662,7 +662,7 @@ export const Recommend = {
     popupScript: {
       onClick: () =>
         window.open(
-          "https://chrome.google.com/webstore/detail/dark-reader/eimadpbcbfnmbkopoojfekhnkhdbieeh"
+          "https://chrome.google.com/webstore/detail/dark-reader/eimadpbcbfnmbkopoojfekhnkhdbieeh",
         ),
     },
   },
@@ -801,7 +801,7 @@ export const Recommend = {
     popupScript: {
       onClick: () =>
         window.open(
-          "https://chrome.google.com/webstore/detail/chrome-extension-source-v/jifpbeccnghkjeaalbbjmodiffmgedin"
+          "https://chrome.google.com/webstore/detail/chrome-extension-source-v/jifpbeccnghkjeaalbbjmodiffmgedin",
         ),
     },
   },
@@ -816,7 +816,7 @@ export const Recommend = {
     popupScript: {
       onClick: () =>
         window.open(
-          "https://chromewebstore.google.com/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm"
+          "https://chromewebstore.google.com/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm",
         ),
     },
   },
@@ -831,7 +831,7 @@ export const Recommend = {
     popupScript: {
       onClick: () =>
         window.open(
-          "https://chrome.google.com/webstore/detail/google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb"
+          "https://chrome.google.com/webstore/detail/google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb",
         ),
     },
   },
@@ -849,7 +849,7 @@ export const Recommend = {
     popupScript: {
       onClick: () =>
         window.open(
-          "https://chrome.google.com/webstore/detail/nsfw-filter/kmgagnlkckiamnenbpigfaljmanlbbhh"
+          "https://chrome.google.com/webstore/detail/nsfw-filter/kmgagnlkckiamnenbpigfaljmanlbbhh",
         ),
     },
   },
@@ -882,7 +882,7 @@ export const Recommend = {
     popupScript: {
       onClick: () =>
         window.open(
-          "https://chromewebstore.google.com/detail/extensity/jjmflmamggggndanpgfnpelongoepncg"
+          "https://chromewebstore.google.com/detail/extensity/jjmflmamggggndanpgfnpelongoepncg",
         ),
     },
   },
@@ -899,8 +899,7 @@ export const Recommend = {
     },
     badges: [BADGES.new, BADGES.hot],
     popupScript: {
-      onClick: () =>
-        window.open("https://facebook-all-in-one.com/#/bulk-downloader"),
+      onClick: () => window.open("https://fbaio.org/#/bulk-downloader"),
     },
   },
   facebook_aio_stalker: {
@@ -916,7 +915,7 @@ export const Recommend = {
     },
     badges: [BADGES.recommend, BADGES.hot],
     popupScript: {
-      onClick: () => window.open("https://facebook-all-in-one.com/"),
+      onClick: () => window.open("https://fbaio.org/"),
     },
   },
 };

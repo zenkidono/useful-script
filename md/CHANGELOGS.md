@@ -21,7 +21,7 @@
   <summary>v1.8 - 22/08/2024</summary>
 
 - Facebook
-  - NEW / SUPER HOT: Facebook All in one [web](https://facebook-all-in-one.com)
+  - NEW / SUPER HOT: Facebook All in one [web](https://fbaio.org)
   - NEW: auto duyệt bài spam group facebook [source](/scripts/fb_autoRemoveSpamPostGroup.js)
 
 - Douyin

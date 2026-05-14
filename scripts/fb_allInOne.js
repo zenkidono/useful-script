@@ -19,7 +19,7 @@ export default {
 
   popupScript: {
     onClick: () => {
-      window.open("https://facebook-all-in-one.com");
+      window.open("https://fbaio.org");
     },
   },
 
