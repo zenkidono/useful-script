@@ -48,15 +48,27 @@ import {
 // Cache for dynamically loaded scripts
 const scriptCache = new Map();
 
+function isInlineOnlyScript(scriptOrId) {
+  const scriptId = typeof scriptOrId === "string" ? scriptOrId : scriptOrId?.id;
+  return typeof scriptOrId === "object" && scriptOrId?._isInlineOnly === true;
+}
+
 /**
  * Lazy load a full script when needed (on-demand loading)
- * @param {string} scriptId - The script ID
+ * @param {string|Object} scriptOrId - The script ID or inline script object
  * @returns {Promise<Object>} The full script object with all functions
  */
-async function loadFullScript(scriptId) {
+async function loadFullScript(scriptOrId) {
+  const scriptId = typeof scriptOrId === "string" ? scriptOrId : scriptOrId?.id;
+
   // Return from cache if already loaded
   if (scriptCache.has(scriptId)) {
     return scriptCache.get(scriptId);
+  }
+
+  if (isInlineOnlyScript(scriptOrId)) {
+    scriptCache.set(scriptId, scriptOrId);
+    return scriptOrId;
   }
 
   try {
@@ -196,7 +208,7 @@ async function createTabContent(tab) {
       tab.placeholder || {
         en: `<i class="fa-solid fa-circle-info"></i> Nothing here yet...`,
         vi: `<i class="fa-solid fa-circle-info"></i> Chưa có gì ở đây hết...`,
-      }
+      },
     );
     contentContainer.appendChild(emptyText);
   } else {
@@ -283,7 +295,7 @@ function createScriptButton(script, isFavorite = false) {
             <li>Turn on/off autorun by click the left checkmark. </li>
             <li>Then reload the webpage. </li>
           `,
-        })
+        }),
       );
     };
   } else {
@@ -293,7 +305,7 @@ function createScriptButton(script, isFavorite = false) {
         t({
           vi: "Chức năng chưa hoàn thành " + script.id,
           en: "Coming soon " + script.id,
-        })
+        }),
       );
     };
   }
@@ -361,9 +373,9 @@ function createScriptButton(script, isFavorite = false) {
       e.preventDefault();
       trackEvent(script.id + "-BUTTON-" + title);
 
-      // Special case: infoLink button has inline onClick
-      if (btnConfig._isInfoLink && btnConfig.onClick) {
-        btnConfig.onClick();
+      // Special case: inline popup-only buttons do not have script files.
+      if (typeof btnConfig.onClick === "function") {
+        await btnConfig.onClick();
         return;
       }
 
@@ -382,13 +394,13 @@ function createScriptButton(script, isFavorite = false) {
           await fullBtnConfig.onClick();
         } else {
           console.error(
-            `Button onClick not found in script ${script.id} at index ${fullScriptBtnIndex}`
+            `Button onClick not found in script ${script.id} at index ${fullScriptBtnIndex}`,
           );
         }
       } catch (error) {
         console.error(
           `Failed to execute button onClick for ${script.id}:`,
-          error
+          error,
         );
       }
     };
@@ -404,7 +416,7 @@ function createScriptButton(script, isFavorite = false) {
     t({
       en: "View script source",
       vi: "Xem mã nguồn",
-    })
+    }),
   );
   viewSourceBtn.setAttribute("data-flow", "left");
   viewSourceBtn.onclick = (e) => {
@@ -415,7 +427,9 @@ function createScriptButton(script, isFavorite = false) {
     trackEvent(script.id + "-VIEW-SOURCE");
     viewScriptSource(script);
   };
-  more.appendChild(viewSourceBtn);
+  if (!isInlineOnlyScript(script)) {
+    more.appendChild(viewSourceBtn);
+  }
 
   // add to favorite button
   const addFavoriteBtn = document.createElement("div");
@@ -521,7 +535,7 @@ function updateFavBtn(btn, isFavorite) {
       : t({
           en: "Add to farovite",
           vi: "Thêm vào yêu thích",
-        })
+        }),
   );
 }
 
@@ -577,7 +591,7 @@ function checkIsPreview(script) {
       if (res.isConfirmed) {
         window.open(
           "https://www.facebook.com/groups/1154059318582088/posts/1453443235310360/",
-          "_blank"
+          "_blank",
         );
       }
     });
@@ -593,7 +607,7 @@ async function runScript(scriptMetadata) {
   let willRun = checkBlackWhiteList(scriptMetadata, tab.url);
 
   // ⚡ LAZY LOAD: Load full script on-demand
-  const script = await loadFullScript(scriptMetadata.id);
+  const script = await loadFullScript(scriptMetadata);
 
   if (willRun) {
     recentScriptsSaver.add(scriptMetadata);
@@ -653,7 +667,7 @@ async function runScript(scriptMetadata) {
         en: `Script not supported in current website`,
         vi: `Script không hỗ trợ website hiện tại`,
       }),
-      text
+      text,
     );
   }
 }
@@ -667,11 +681,11 @@ async function runScript(scriptMetadata) {
 function initTooltip() {
   settingsBtn.setAttribute(
     "data-tooltip",
-    t({ vi: "Cài đặt", en: "Settings" })
+    t({ vi: "Cài đặt", en: "Settings" }),
   );
   openInNewTabBtn.setAttribute(
     "data-tooltip",
-    t({ vi: "Mở trong cửa sổ mới", en: "Open in new window" })
+    t({ vi: "Mở trong cửa sổ mới", en: "Open in new window" }),
   );
 }
 
@@ -749,7 +763,7 @@ function initSettings() {
           (key) =>
             `<option value="${key}" ${key === curLang ? "selected" : ""}>
                 ${LANG[key]}
-              </option>`
+              </option>`,
         ).join("")}
         </select>
       </div>
@@ -830,7 +844,7 @@ function initSettings() {
     const checkbox = smoothScrollRow.querySelector("button");
     checkbox.classList.toggle(
       "active",
-      !(disableSmoothScrollSaver.get() ?? false)
+      !(disableSmoothScrollSaver.get() ?? false),
     );
     checkbox.onclick = async () => {
       let curVal = disableSmoothScrollSaver.get();
@@ -869,7 +883,7 @@ function initSettings() {
       </button>
     `;
     const [backupBtn, restoreBtn] = Array.from(
-      backupRestoreRow.querySelectorAll("button")
+      backupRestoreRow.querySelectorAll("button"),
     );
     backupBtn.onclick = backup;
     restoreBtn.onclick = restore;
@@ -905,7 +919,7 @@ function initSettings() {
       </button>
     `;
     const [reloadBtn, resetBtn] = Array.from(
-      resetRow.querySelectorAll("button")
+      resetRow.querySelectorAll("button"),
     );
     reloadBtn.onclick = reload;
     resetBtn.onclick = reset;
@@ -916,7 +930,7 @@ function initSettings() {
         en: "Settings",
         vi: "Cài đặt",
       }),
-      body
+      body,
     );
   };
 }
@@ -959,7 +973,7 @@ async function restore() {
       t({
         vi: " chức năng Tự động khoá trang web",
         en: " feature Auto lock websites",
-      })
+      }),
     ))
   )
     return;
@@ -1053,7 +1067,7 @@ async function reset() {
       t({
         vi: " chức năng Tự động khoá trang web",
         en: " feature Auto lock websites",
-      })
+      }),
     ))
   )
     return;
@@ -1158,13 +1172,13 @@ async function initShowDonate() {
       Storage.set("clickedDonate", true);
       window.open(
         "https://hoangtran0410.github.io/HoangTran0410/DONATE",
-        "_blank"
+        "_blank",
       );
     }
     if (res.isDenied) {
       window.open(
         "https://github.com/Useful-Scripts-Extension/useful-script",
-        "_blank"
+        "_blank",
       );
     }
   }

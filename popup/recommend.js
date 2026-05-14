@@ -919,3 +919,7 @@ export const Recommend = {
     },
   },
 };
+
+Object.values(Recommend).forEach((script) => {
+  script._isInlineOnly = true;
+});
